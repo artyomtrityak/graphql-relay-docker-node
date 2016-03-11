@@ -1,0 +1,32 @@
+{
+  "name": "letsplay-graphql-sever",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "nodemon -L --debug app/index.js",
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artyomtrityak/letsplay-graphql-sever.git"
+  },
+  "keywords": [
+    "graphql",
+    "nodejs"
+  ],
+  "author": "Artyom Trityak <art.trityak@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/artyomtrityak/letsplay-graphql-sever/issues"
+  },
+  "homepage": "https://github.com/artyomtrityak/letsplay-graphql-sever#readme",
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "express": "^4.13.4",
+    "express-graphql": "^0.4.9",
+    "graphql": "^0.4.18",
+    "nodemon": "^1.9.1",
+    "pg": "^4.5.1"
+  }
+}
