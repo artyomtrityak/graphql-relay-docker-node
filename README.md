@@ -19,7 +19,9 @@ then you can connect to psql shell
 
 ## Setup Node.js server
 1. `docker build -t letsplay/nodeapp:v1 .`
-2. `docker run --name backend -v ``pwd``:/usr/src/letsplay -d -p 5000:5000 --link db:postgres letsplay/nodeapp:v1`
+2. ```
+> docker run --name backend -v `pwd`:/usr/src/letsplay -d -p 5000:5000 --link db:postgres letsplay/nodeapp:v1
+```
 3. `docker logs -f backend`
 
 You can also stop and start backend server by this commands
