@@ -6,4 +6,4 @@ WORKDIR /usr/src/letsplay/
 
 EXPOSE 5000
 
-CMD npm install && npm start
+CMD npm install --no-bin-links && npm start

@@ -1,9 +1,9 @@
-'use scrict';
+'use strict';
 
-var graphql = require('graphql');
-var graphqlHTTP = require('express-graphql');
-var express = require('express');
-var pg = require('pg');
+let graphql = require('graphql'),
+    graphqlHTTP = require('express-graphql'),
+    app = require('express')(),
+    db = require('./data-layer');
 
 // Import our data set from above
 var data = require('./data.json');
@@ -36,39 +36,10 @@ var schema = new graphql.GraphQLSchema({
   })
 });
 
-var configStr = "postgres://" +
-  process.env.DB_ENV_POSTGRES_USER +
-  ":" +
-  process.env.DB_ENV_POSTGRES_PASSWORD +
-  "@" +
-  process.env.DB_PORT_5432_TCP_ADDR +
-  "/" +
-  process.env.DB_ENV_POSTGRES_DB;
+db.connect(app);
 
-console.log('Connecting to database.... ', configStr);
+console.log('Server is up!');
 
-//this initializes a connection pool
-//it will keep idle connections open for a (configurable) 30 seconds
-//and set a limit of 20 (also configurable)
-pg.connect(configStr, function(err, client, done) {
-  if(err) {
-    return console.error('error fetching client from pool', err);
-  }
-  client.query('SELECT $1::int AS number', ['1'], function(err, result) {
-    //call `done()` to release the client back to the pool
-    done();
-
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log(result.rows[0].number);
-    //output: 1
-  });
-});
-
-
-console.log('Server online!');
-
-express()
+app
   .use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
   .listen(5000);
