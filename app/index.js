@@ -1,45 +1,38 @@
 'use strict';
 
 let graphql = require('graphql'),
-    graphqlHTTP = require('express-graphql'),
-    app = require('express')(),
-    db = require('./data-layer');
+  graphqlHTTP = require('express-graphql'),
+  express = require('express'),
+  session = require('express-session'),
 
-// Import our data set from above
-var data = require('./data.json');
+  db = require('./data-layer'),
+  graphqlSchema = require('./graphql-schema');
 
-// Define our user type, with two string fields; `id` and `name`
-var userType = new graphql.GraphQLObjectType({
-  name: 'User',
-  fields: {
-    id: { type: graphql.GraphQLString },
-    name: { type: graphql.GraphQLString },
-  }
-});
 
-// Define our schema, with one top level field, named `user`, that
-// takes an `id` argument and returns the User with that ID.
-var schema = new graphql.GraphQLSchema({
-  query: new graphql.GraphQLObjectType({
-    name: 'Query',
-    fields: {
-      user: {
-        type: userType,
-        args: {
-          id: { type: graphql.GraphQLString }
-        },
-        resolve: function (_, args) {
-          return data[args.id];
-        }
-      }
-    }
-  })
-});
-
+let app = express();
+app.use(session({
+  secret: 'keyboard cat', //TODO: get from process.env.
+  //store: TODO: use some store to store sessions. Redis?
+  cookie: {maxAge: 60000},
+  resave: false,
+  saveUninitialized: false
+}));
 db.connect(app);
 
 console.log('Server is up!');
 
+//TODO: only for development mode, check process.env.NODE_ENV
+let formatError = (error) => ({
+  message: error.message,
+  locations: error.locations,
+  stack: error.stack
+});
+
 app
-  .use('/graphql', graphqlHTTP({ schema: schema, pretty: true }))
+  .use('/graphql', graphqlHTTP((request) => ({
+    schema: graphqlSchema,
+    pretty: true,
+    rootValue: {session: request.session},
+    formatError: formatError
+  })))
   .listen(5000);

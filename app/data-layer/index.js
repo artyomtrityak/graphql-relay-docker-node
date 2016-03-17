@@ -1,12 +1,16 @@
 'use strict';
 
-let knexFactory = require('knex'),
-    PlayModel = require('./play.model'),
-    UserModel = require('./user.model');
+const knexFactory = require('knex'),
+  PlayModel = require('./play.model'),
+  UserModel = require('./user.model');
 
 
-function connect (app) {
-  const knex = knexFactory({
+/**
+ * Connect to database and initialize all database models
+ * @param  {object} app Instance of express app
+ */
+module.exports.connect = function connect(app) {
+  const db = knexFactory({
     debug: true,
     client: 'pg',
     connection: {
@@ -17,6 +21,5 @@ function connect (app) {
     }
   });
 
-  UserModel(app, knex);
-}
-module.exports.connect = connect;
+  UserModel(app, db);
+};

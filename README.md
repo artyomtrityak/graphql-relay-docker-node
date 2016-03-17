@@ -19,7 +19,7 @@ then you can connect to psql shell
 
 ## Setup Node.js server
 1. `docker build -t letsplay/nodeapp:v1 .`
-2. ``docker run --name backend -v `pwd`:/usr/src/letsplay -d -p 5000:5000 --link db:db letsplay/nodeapp:v1``
+2. ``docker run -it --name backend -v `pwd`:/usr/src/letsplay -d -p 5000:5000 --link db:db letsplay/nodeapp:v1``
 3. `docker logs -f backend`
 
 You can also stop and start backend server by this commands
@@ -34,3 +34,4 @@ Address depends on `docker-machine ip default`
 ## Query example
 Address depends
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { user(id: "1"){ name } }' http://192.168.99.100:5000/graphql`
+`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { user_db{ email, id } }' http://192.168.99.100:5000/graphql`
