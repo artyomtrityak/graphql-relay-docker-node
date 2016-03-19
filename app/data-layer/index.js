@@ -11,7 +11,7 @@ const knexFactory = require('knex'),
  */
 module.exports.connect = function connect(app) {
   const db = knexFactory({
-    debug: true,
+    debug: true, //TODO: use process.env.NODE_ENV development
     client: 'pg',
     connection: {
       host     : process.env.DB_PORT_5432_TCP_ADDR,

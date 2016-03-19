@@ -4,7 +4,7 @@ let graphql = require('graphql');
 
 
 const userTypeSchema = new graphql.GraphQLObjectType({
-  name: 'user_db',
+  name: 'user',
   description: 'The user type.',
 
   fields: () => ({

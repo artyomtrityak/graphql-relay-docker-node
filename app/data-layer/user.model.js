@@ -1,6 +1,6 @@
 'use strict';
 
-let express,
+let app,
   db,
   PublicAPI = {};
 
@@ -10,34 +10,69 @@ let express,
  * @param  {object} _express Instance of express app
  * @param  {object} _db      Instance of knex db connection
  */
-module.exports = function initialize(_express, _db) {
-  express = _express;
+module.exports = function initialize(_app, _db) {
+  app = _app;
   db = _db;
 
-  db.schema.dropTable('users')
-  .then(function() {
-    return db.schema.createTable('users', function(t) {
-      t.increments('id').primary();
-      t.string('email', 100);
-      t.string('pass_salt', 32);
-      t.string('password_salted', 32);
-      t.boolean('verified').defaultTo(false);
-      t.json('details');
-    });
+  //TODO: remove drop table when mock setup will be done
+  //db.schema.dropTable('users')
+  //.then(function() {
+  db.schema.createTableIfNotExists('users', function(t) {
+    t.increments('id').primary();
+    t.string('email', 100);
+    t.string('pass_salt', 32);
+    t.string('password_salted', 32);
+    t.boolean('verified').defaultTo(false);
+    t.json('details');
   });
+  //});
+
+  app.set('model_user', PublicAPI);
 };
 
 
 /**
  * Get lists of users
- * @param  {object} options {pageNum: Number, pageSize: Number}
+ * @param  {object} options {pageNum: Integer, pageSize: Integer}
  * @return {Promise} Select query promise
  */
 PublicAPI.getUsers = (options) => {
-  options = Object.assign({}, options, {pageNum: 1, pageSize: 50});
+  options = Object.assign({}, options, {page: 1, pageSize: 50});
 
   return db.select('id', 'email', 'verified', 'details')
     .table('users')
-    .limit(options.pageSize)
-    .offset((options.pageNum - 1) * options.pageSize);
+    .offset((options.page - 1) * options.pageSize)
+    .limit(options.pageSize);
+};
+
+
+/**
+ * Get one user
+ * @param  {object} options {id: Integer}
+ * @return {Promise} Select query promise
+ */
+PublicAPI.getUser = (options) => {
+  return db.select('id', 'email', 'verified', 'details')
+    .table('users')
+    .where('id', options.id)
+    .then((users) => {
+      console.log('res:', users);
+      return users[0];
+    });
+};
+
+
+/**
+ * Create new user
+ * @param  {object} options {email: String}
+ * @return {Promise} Select created user query promise
+ */
+PublicAPI.createUser = (options) => {
+  return db
+    .into('users')
+    .returning('id')
+    .insert({email: options.email})
+    .then((params) => {
+      return PublicAPI.getUser({id: params[0]});
+    });
 };

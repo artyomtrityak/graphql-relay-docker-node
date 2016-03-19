@@ -32,7 +32,10 @@ app
   .use('/graphql', graphqlHTTP((request) => ({
     schema: graphqlSchema,
     pretty: true,
-    rootValue: {session: request.session},
+    rootValue: {
+      session: request.session,
+      app: app
+    },
     formatError: formatError
   })))
   .listen(5000);

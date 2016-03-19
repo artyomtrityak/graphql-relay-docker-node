@@ -7,6 +7,6 @@ let graphql = require('graphql'),
 
 const Schema = new graphql.GraphQLSchema({
   query: QuerySchema,
-  //mutation: MutationSchema
+  mutation: MutationSchema
 });
 module.exports = Schema;

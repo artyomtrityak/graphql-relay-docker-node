@@ -1,41 +1,31 @@
 'use strict';
 
 let graphql = require('graphql'),
-  TypesSchema = require('../types');
+  userQuery = require('./user.query');
 
 
-// Import our data set from above
-var data = require('../../data.json');
+const viewerType = new graphql.GraphQLObjectType({
+  name: 'RootViewerType',
+  description: 'Root Viewer type',
 
-// Define our user type, with two string fields; `id` and `name`
-var userType = new graphql.GraphQLObjectType({
-  name: 'User',
-  fields: {
-    id: { type: graphql.GraphQLString },
-    name: { type: graphql.GraphQLString },
-  }
+  fields: () => ({
+    user: userQuery.user,
+    users: userQuery.users
+  })
 });
 
-let QuerySchema = new graphql.GraphQLObjectType({
-  name: 'Query',
-  fields: {
-    user: {
-      type: userType,
-      args: {
-        id: { type: graphql.GraphQLString }
-      },
-      resolve: function(_, args) {
-        return data[args.id];
-      }
-    },
 
-    user_db: {
-      type: TypesSchema.user,
-      resolve: (root, params) => {
-        console.log('resolve!!', root, params);
-        return {id: '123', email: 'art.trityak@gmail.com'};
-      },
+const QuerySchema = new graphql.GraphQLObjectType({
+  name: 'RootQuery',
+  fields: {
+    root: {
+      type: viewerType,
+      resolve: () => {
+        return {server: '1'};
+      }
     }
   }
 });
+
+
 module.exports = QuerySchema;
