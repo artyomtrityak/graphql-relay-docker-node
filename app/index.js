@@ -21,7 +21,7 @@ db.connect(app);
 
 console.log('Server is up!');
 
-//TODO: only for development mode, check process.env.NODE_ENV
+//TODO: only for development mode, check process.env.NODE_ENV development and hide all errors for production
 let formatError = (error) => ({
   message: error.message,
   locations: error.locations,
