@@ -1,17 +1,16 @@
 'use strict';
 
-let graphql = require('graphql');
+let graphql = require('graphql'),
+  relay = require('graphql-relay');
 
 
-const userTypeSchema = new graphql.GraphQLObjectType({
-  name: 'user',
+const userType = new graphql.GraphQLObjectType({
+  name: 'User',
   description: 'The user type.',
+  interfaces: [global.app.get('graphql__nodeInterface')],
 
   fields: () => ({
-    id: {
-      type: new graphql.GraphQLNonNull(graphql.GraphQLString),
-      description: 'The id of the user.'
-    },
+    id: relay.globalIdField('User'),
 
     email: {
       type: graphql.GraphQLString,
@@ -29,4 +28,4 @@ const userTypeSchema = new graphql.GraphQLObjectType({
     }
   })
 });
-module.exports = userTypeSchema;
+module.exports = userType;

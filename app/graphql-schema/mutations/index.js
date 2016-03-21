@@ -1,13 +1,16 @@
 'use strict';
 
-const graphql = require('graphql'),
-  userMutation = require('./user.mutation');
+const graphql = require('graphql');
+
+module.exports = () => {
+  const userMutation = require('./user.mutation');
 
 
-const MutationSchema = new graphql.GraphQLObjectType({
-  name: 'RootMutation',
-  fields: {
-    createUser: userMutation.createUser
-  }
-});
-module.exports = MutationSchema;
+  const RootMutation = new graphql.GraphQLObjectType({
+    name: 'RootMutation',
+    fields: {
+      createUser: userMutation.createUser
+    }
+  });
+  return RootMutation;
+};

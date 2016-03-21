@@ -1,31 +1,37 @@
 'use strict';
 
-let graphql = require('graphql'),
-  userQuery = require('./user.query');
+const graphql = require('graphql'),
+  relay = require('graphql-relay');
 
 
-const viewerType = new graphql.GraphQLObjectType({
-  name: 'RootViewerType',
-  description: 'Root Viewer type',
-
-  fields: () => ({
-    user: userQuery.user,
-    users: userQuery.users
-  })
-});
+module.exports = (nodeField) => {
+  //This should be required in execution phase to be able register nodeInterface first
+  const userQuery = require('./user.query');
 
 
-const QuerySchema = new graphql.GraphQLObjectType({
-  name: 'RootQuery',
-  fields: {
-    root: {
-      type: viewerType,
-      resolve: () => {
-        return {server: '1'};
-      }
+  const viewerType = new graphql.GraphQLObjectType({
+    name: 'RootViewerType',
+    description: 'Root Viewer type',
+
+    fields: () => ({
+      user: userQuery.user,
+      users: userQuery.users
+    })
+  });
+
+
+  const rootQuery = new graphql.GraphQLObjectType({
+    name: 'RootQuery',
+    fields: {
+      viewer: {
+        type: viewerType,
+        resolve: () => {
+          return {server: '1'};
+        }
+      },
+      node: nodeField
     }
-  }
-});
+  });
 
-
-module.exports = QuerySchema;
+  return rootQuery;
+};

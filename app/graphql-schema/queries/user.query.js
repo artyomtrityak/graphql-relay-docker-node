@@ -1,8 +1,8 @@
 'use strict';
 
 let graphql = require('graphql'),
+  relay = require('graphql-relay'),
   userType = require('../types').user;
-
 
 /**
  * GrapQL Query for single user
@@ -11,7 +11,7 @@ let graphql = require('graphql'),
  * @return {Promise}
  */
 function getUserResolver(parent, params, root) {
-  return root.rootValue.app.get('model_user').getUser({id: params.id});
+  return global.app.get('model__user').getUser({id: params.id});
 }
 
 
@@ -22,7 +22,7 @@ function getUserResolver(parent, params, root) {
  * @return {Promise}
  */
 function getUsersResolver(parent, params, root) {
-  return root.rootValue.app.get('model_user').getUsers({page: params.page});
+  return global.app.get('model__user').getUsers({page: params.page});
 }
 
 

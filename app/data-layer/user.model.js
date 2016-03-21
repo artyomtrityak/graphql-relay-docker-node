@@ -1,7 +1,6 @@
 'use strict';
 
-let app,
-  db,
+let db,
   PublicAPI = {};
 
 
@@ -10,15 +9,15 @@ let app,
  * @param  {object} _express Instance of express app
  * @param  {object} _db      Instance of knex db connection
  */
-module.exports = function initialize(_app, _db) {
-  app = _app;
+module.exports = function initialize(_db) {
   db = _db;
 
   //TODO: remove drop table when mock setup will be done
   //db.schema.dropTable('users')
   //.then(function() {
   db.schema.createTableIfNotExists('users', function(t) {
-    t.increments('id').primary();
+    //TODO: test uuid
+    t.uuid('id').primary();
     t.string('email', 100);
     t.string('pass_salt', 32);
     t.string('password_salted', 32);
@@ -27,7 +26,7 @@ module.exports = function initialize(_app, _db) {
   });
   //});
 
-  app.set('model_user', PublicAPI);
+  global.app.set('model__user', PublicAPI);
 };
 
 

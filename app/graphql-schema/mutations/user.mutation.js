@@ -1,6 +1,7 @@
 'use strict';
 
-const graphql = require('graphql'),
+let graphql = require('graphql'),
+  relay = require('graphql-relay'),
   userType = require('../types').user;
 
 
@@ -11,7 +12,7 @@ const graphql = require('graphql'),
  * @return {Promise}
  */
 function createUserResolver(root, params) {
-  return root.app.get('model_user').createUser(params);
+  return global.app.get('model__user').createUser(params);
 }
 
 

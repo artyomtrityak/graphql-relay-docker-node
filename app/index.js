@@ -3,21 +3,23 @@
 let graphql = require('graphql'),
   graphqlHTTP = require('express-graphql'),
   express = require('express'),
-  session = require('express-session'),
+  session = require('express-session');
 
-  db = require('./data-layer'),
+
+global.app = express();
+
+const db = require('./data-layer'),
   graphqlSchema = require('./graphql-schema');
 
-
-let app = express();
-app.use(session({
+global.app.use(session({
   secret: 'keyboard cat', //TODO: get from process.env.
   //store: TODO: use some store to store sessions. Redis?
   cookie: {maxAge: 60000},
   resave: false,
   saveUninitialized: false
 }));
-db.connect(app);
+
+db.connect();
 
 console.log('Server is up!');
 
@@ -28,13 +30,12 @@ let formatError = (error) => ({
   stack: error.stack
 });
 
-app
+global.app
   .use('/graphql', graphqlHTTP((request) => ({
     schema: graphqlSchema,
     pretty: true,
     rootValue: {
-      session: request.session,
-      app: app
+      session: request.session
     },
     formatError: formatError
   })))

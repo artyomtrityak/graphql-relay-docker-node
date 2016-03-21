@@ -9,7 +9,7 @@ const knexFactory = require('knex'),
  * Connect to database and initialize all database models
  * @param  {object} app Instance of express app
  */
-module.exports.connect = function connect(app) {
+module.exports.connect = function connect() {
   const db = knexFactory({
     debug: true, //TODO: use process.env.NODE_ENV development
     client: 'pg',
@@ -21,5 +21,5 @@ module.exports.connect = function connect(app) {
     }
   });
 
-  UserModel(app, db);
+  UserModel(db);
 };
