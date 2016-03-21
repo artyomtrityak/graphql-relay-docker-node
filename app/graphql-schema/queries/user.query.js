@@ -1,8 +1,9 @@
 'use strict';
 
-let graphql = require('graphql'),
+const graphql = require('graphql'),
   relay = require('graphql-relay'),
-  userType = require('../types').user;
+  types = require('../types');
+
 
 /**
  * GrapQL Query for single user
@@ -13,6 +14,7 @@ let graphql = require('graphql'),
 function getUserResolver(parent, params, root) {
   return global.app.get('model__user').getUser({id: params.id});
 }
+module.exports.getUserResolver = getUserResolver;
 
 
 /**
@@ -24,21 +26,22 @@ function getUserResolver(parent, params, root) {
 function getUsersResolver(parent, params, root) {
   return global.app.get('model__user').getUsers({page: params.page});
 }
+module.exports.getUsersResolver = getUserResolver;
 
 
-module.exports.user = {
-  type: userType,
+module.exports.user = () => ({
+  type: types.user,
   args: {
     id: { type: graphql.GraphQLInt }
   },
   resolve: getUserResolver
-};
+});
 
 
-module.exports.users = {
-  type: new graphql.GraphQLList(userType),
+module.exports.users = () => ({
+  type: new graphql.GraphQLList(types.user),
   args: {
     page: { type: graphql.GraphQLInt }
   },
   resolve: getUsersResolver
-};
+});

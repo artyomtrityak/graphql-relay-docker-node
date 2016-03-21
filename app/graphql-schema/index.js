@@ -2,6 +2,8 @@
 
 let graphql = require('graphql'),
   relay = require('graphql-relay'),
+
+  types = require('./types'),
   rootQuery = require('./queries'),
   rootMutation = require('./mutations');
 
@@ -26,8 +28,7 @@ const nodeDefs = relay.nodeDefinitions(
   }
 );
 
-global.app.set('graphql__nodeInterface', nodeDefs.nodeInterface);
-
+types(nodeDefs.nodeInterface);
 
 const Schema = new graphql.GraphQLSchema({
   //!important: rootQuery and rootMutation must be executed after graphql__nodeInterface definition

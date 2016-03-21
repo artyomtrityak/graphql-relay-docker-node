@@ -1,8 +1,8 @@
 'use strict';
 
-let graphql = require('graphql'),
+const graphql = require('graphql'),
   relay = require('graphql-relay'),
-  userType = require('../types').user;
+  types = require('../types');
 
 
 /**
@@ -16,8 +16,8 @@ function createUserResolver(root, params) {
 }
 
 
-module.exports.createUser = {
-  type: userType,
+module.exports.createUser = () => ({
+  type: types.user,
   args: {
     email: {
       type: graphql.GraphQLString
@@ -27,4 +27,4 @@ module.exports.createUser = {
     }
   },
   resolve: createUserResolver
-};
+});
