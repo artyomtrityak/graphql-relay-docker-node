@@ -28,10 +28,10 @@ const nodeDefs = relay.nodeDefinitions(
   }
 );
 
+//Lazy define graphql types with interface
 types(nodeDefs.nodeInterface);
 
 const Schema = new graphql.GraphQLSchema({
-  //!important: rootQuery and rootMutation must be executed after graphql__nodeInterface definition
   query: rootQuery(nodeDefs.nodeField),
   mutation: rootMutation()
 });
