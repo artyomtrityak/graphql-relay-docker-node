@@ -11,7 +11,7 @@ const graphql = require('graphql'),
  * @param  {Object} params
  * @return {Promise}
  */
-function createUserResolver(root, params) {
+function createUserResolver(parent, params, root) {
   return global.app.get('model__user').createUser(params);
 }
 
