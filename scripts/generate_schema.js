@@ -11,7 +11,7 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _graphqlSchema = require('../app/graphql-schema');
+var _graphqlSchema = require('../server/graphql-schema');
 
 var _graphqlSchema2 = _interopRequireDefault(_graphqlSchema);
 
@@ -39,7 +39,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
           if (result.errors) {
             console.error('ERROR introspecting schema: ', JSON.stringify(result.errors, null, 2));
           } else {
-            _fs2.default.writeFileSync(_path2.default.join(__dirname, '../data/schema.json'), JSON.stringify(result, null, 2));
+            _fs2.default.writeFileSync(_path2.default.join(__dirname, './schema.json'), JSON.stringify(result, null, 2));
           }
 
         case 4:
@@ -51,4 +51,4 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 })))();
 
 // Save user readable type system shorthand of schema
-_fs2.default.writeFileSync(_path2.default.join(__dirname, '../data/schema.graphql'), (0, _utilities.printSchema)(_graphqlSchema2.default));
+_fs2.default.writeFileSync(_path2.default.join(__dirname, './schema.graphql'), (0, _utilities.printSchema)(_graphqlSchema2.default));

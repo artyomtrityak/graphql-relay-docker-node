@@ -4,7 +4,7 @@
   "description": "",
   "main": "app/index.js",
   "scripts": {
-    "start": "node_modules/nodemon/bin/nodemon.js -L --debug app/index.js",
+    "start": "node_modules/nodemon/bin/nodemon.js -L --debug server/index.js",
     "test": "node node_modules/eslint/bin/eslint.js ."
   },
   "repository": {

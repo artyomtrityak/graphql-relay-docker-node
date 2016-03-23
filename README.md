@@ -1,7 +1,4 @@
-# Let's play GraphQL server
-Let's play Docker GraphQL server setup
-
-# Setup
+# Docker GraphQL Relay Node.js setup
 
 ## Get images
 1. `docker pull node`
