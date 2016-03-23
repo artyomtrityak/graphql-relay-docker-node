@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/artyomtrityak/letsplay-graphql-sever#readme",
   "dependencies": {
+    "babel-polyfill": "^6.7.4",
     "bluebird": "^3.3.4",
     "express": "^4.13.4",
     "express-graphql": "^0.4.9",
@@ -33,6 +34,8 @@
     "pg": "^4.5.1"
   },
   "devDependencies": {
+    "babel-core": "^6.7.4",
+    "babel-preset-stage-0": "^6.5.0",
     "eslint": "^2.4.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",

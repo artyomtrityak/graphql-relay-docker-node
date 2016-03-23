@@ -1,0 +1,24 @@
+interface Node {
+  id: ID!
+}
+
+type RootMutation {
+  createUser(email: String, password: String): User
+}
+
+type RootQuery {
+  viewer: RootViewerType
+  node(id: ID!): Node
+}
+
+type RootViewerType {
+  user(id: Int): User
+  users(page: Int): [User]
+}
+
+type User implements Node {
+  id: ID!
+  email: String
+  verified: Boolean
+  details: String
+}

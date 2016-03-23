@@ -30,6 +30,5 @@ module.exports = (nodeInterface) => {
     })
   });
 
-  global.app.set('graphql__user', userType);
   return userType;
 };

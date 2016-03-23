@@ -13,17 +13,19 @@ module.exports = function initialize(_db) {
   db = _db;
 
   //TODO: remove drop table when mock setup will be done
-  //db.schema.dropTable('users')
+  //db.schema.dropTableIfExists('users')
   //.then(function() {
   db.schema.createTableIfNotExists('users', function(t) {
-    //TODO: test uuid
-    t.uuid('id').primary();
+    //TODO: use uuid
+    t.increments('id').primary();
+    t.string('__type', 16).defaultTo('User');
     t.string('email', 100);
     t.string('pass_salt', 32);
     t.string('password_salted', 32);
     t.boolean('verified').defaultTo(false);
     t.json('details');
-  });
+  })
+  .then(() => {});
   //});
 
   global.app.set('model__user', PublicAPI);
@@ -38,7 +40,7 @@ module.exports = function initialize(_db) {
 PublicAPI.getUsers = (options) => {
   options = Object.assign({}, options, {page: 1, pageSize: 50});
 
-  return db.select('id', 'email', 'verified', 'details')
+  return db.select('id', 'email', 'verified', 'details', '__type')
     .table('users')
     .offset((options.page - 1) * options.pageSize)
     .limit(options.pageSize);
@@ -51,11 +53,10 @@ PublicAPI.getUsers = (options) => {
  * @return {Promise} Select query promise
  */
 PublicAPI.getUser = (options) => {
-  return db.select('id', 'email', 'verified', 'details')
+  return db.select('id', 'email', 'verified', 'details', '__type')
     .table('users')
     .where('id', options.id)
     .then((users) => {
-      console.log('res:', users);
       return users[0];
     });
 };

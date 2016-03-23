@@ -1,7 +1,6 @@
 'use strict';
 
 const knexFactory = require('knex'),
-  PlayModel = require('./play.model'),
   UserModel = require('./user.model');
 
 
