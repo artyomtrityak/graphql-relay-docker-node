@@ -3,10 +3,12 @@
 let graphql = require('graphql'),
   graphqlHTTP = require('express-graphql'),
   express = require('express'),
+  cors = require('cors'),
   session = require('express-session');
 
 
 global.app = express();
+global.app.use(cors());
 
 const db = require('./data-layer'),
   graphqlSchema = require('./graphql-schema');
