@@ -2,8 +2,10 @@
 
 const graphql = require('graphql'),
   relay = require('graphql-relay'),
-  userQuery = require('./user.query');
+  userQuery = require('./user.query'),
+  playQuery = require('./play.query');
 
+console.log(playQuery)
 
 module.exports = (nodeField) => {
   const viewerType = new graphql.GraphQLObjectType({
@@ -12,7 +14,9 @@ module.exports = (nodeField) => {
 
     fields: () => ({
       user: userQuery.user(),
-      users: userQuery.users()
+      users: userQuery.users(),
+      play: playQuery.play(),
+      plays: playQuery.plays()
     })
   });
 
