@@ -1,7 +1,9 @@
 'use strict';
 
 let graphql = require('graphql'),
-  relay = require('graphql-relay');
+  relay = require('graphql-relay'),
+
+  types = require('../types');
 
 
 module.exports = (nodeInterface) => {
@@ -16,6 +18,13 @@ module.exports = (nodeInterface) => {
       name: {
         type: graphql.GraphQLString,
         description: 'The play name'
+      },
+
+      author: {
+        type: types.userInterface,
+        resolve: () => {
+          return {id: 1, name: 'user name'};
+        }
       }
     })
   });

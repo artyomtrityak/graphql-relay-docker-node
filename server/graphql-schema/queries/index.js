@@ -5,8 +5,6 @@ const graphql = require('graphql'),
   userQuery = require('./user.query'),
   playQuery = require('./play.query');
 
-console.log(playQuery)
-
 module.exports = (nodeField) => {
   const viewerType = new graphql.GraphQLObjectType({
     name: 'RootViewerType',
