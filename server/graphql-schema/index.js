@@ -2,8 +2,9 @@
 
 let graphql = require('graphql'),
   relay = require('graphql-relay'),
-  schema = require('./schema'),
-
+  types = require('./types'),
+  queries = require('./queries'),
+  mutations = require('./mutations'),
   getUserResolver = require('./resolvers').getUserResolver;
 
 
@@ -18,53 +19,24 @@ const nodeDefs = relay.nodeDefinitions(
   },
   (obj) => {
     if (obj.__type === 'User') {
-      return types.user;
+      return refs.userType;
     }
     return null;
   }
 );
 
-//Initialize schema by magic nodeInterface
-schema(nodeDefs.nodeInterface);
 
-
-const viewerType = new graphql.GraphQLObjectType({
-  name: 'RootViewerType',
-  description: 'Root Viewer type',
-
-  fields: () => ({
-    user: schema.user(),
-    users: schema.users(),
-    play: schema.play()
-    //plays: schema.plays()
-  })
-});
-
-
-const rootQuery = new graphql.GraphQLObjectType({
-  name: 'RootQuery',
-  fields: {
-    viewer: {
-      type: viewerType,
-      resolve: () => {
-        return {server: '1'};
-      }
-    },
-    node: nodeDefs.nodeField
-  }
-});
-
-
-const rootMutation = new graphql.GraphQLObjectType({
-  name: 'RootMutation',
-  fields: {
-    createUser: schema.createUser()
-  }
+// Create refs for GraphQL schema lazy creation
+let refs = {nodeInterface: nodeDefs.nodeInterface, nodeField: nodeDefs.nodeField};
+[types, queries, mutations].forEach((schema) => {
+  Object.keys(schema).forEach((key) => {
+    refs[key] = schema[key](refs);
+  });
 });
 
 
 const Schema = new graphql.GraphQLSchema({
-  query: rootQuery,
-  mutation: rootMutation
+  query: refs.rootQuery,
+  mutation: refs.rootMutation
 });
 module.exports = Schema;
