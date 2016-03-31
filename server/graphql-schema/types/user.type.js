@@ -28,7 +28,7 @@ module.exports = (refs) => {
       plays: {
         type: new graphql.GraphQLList(refs.playType),
         resolve: () => {
-          return [{id: 123455, name: 'play 1'}, {id: 255566, name: 'play 2'}];
+          return [{id: 1, name: 'play 1'}, {id: 2, name: 'play 2'}];
         }
       }
     })

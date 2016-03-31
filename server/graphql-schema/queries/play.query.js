@@ -10,5 +10,7 @@ module.exports = (refs) => ({
   args: {
     id: { type: graphql.GraphQLInt }
   },
-  resolve: resolvers.getPlayResolver
+  resolve: (parent, params, root) => {
+    return resolvers.getPlayResolver(params);
+  }
 });

@@ -6,7 +6,7 @@
  * @param  {Object} params
  * @return {Promise}
  */
-function getUserResolver(parent, params, root) {
+function getUserResolver(params) {
   return global.app.get('model__user').getUser({id: params.id});
 }
 module.exports.getUserResolver = getUserResolver;
@@ -18,7 +18,7 @@ module.exports.getUserResolver = getUserResolver;
  * @param  {Object} params
  * @return {Promise}
  */
-function getUsersResolver(parent, params, root) {
+function getUsersResolver(params) {
   return global.app.get('model__user').getUsers({page: params.page});
 }
 module.exports.getUsersResolver = getUsersResolver;
@@ -30,7 +30,7 @@ module.exports.getUsersResolver = getUsersResolver;
  * @param  {Object} params
  * @return {Promise}
  */
-function getPlayResolver(parent, params, root) {
+function getPlayResolver(params) {
   return {id: 2, name: 'play 2'};
   //return global.app.get('model__user').getUser({id: params.id});
 }
@@ -43,7 +43,7 @@ module.exports.getPlayResolver = getPlayResolver;
  * @param  {Object} params
  * @return {Promise}
  */
-function getPlaysResolver(parent, params, root) {
+function getPlaysResolver(params) {
   return [{id: 1, name: 'play 1'}, {id: 2, name: 'play 2'}];
   //return global.app.get('model__user').getUsers({page: params.page});
 }
@@ -56,7 +56,7 @@ module.exports.getPlaysResolver = getPlaysResolver;
  * @param  {Object} params
  * @return {Promise}
  */
-function createUserResolver(parent, params, root) {
+function createUserResolver(params) {
   return global.app.get('model__user').createUser(params);
 }
 module.exports.createUserResolver = createUserResolver;
@@ -68,7 +68,7 @@ module.exports.createUserResolver = createUserResolver;
  * @param  {Object} params
  * @return {Promise}
  */
-function createPlayResolver(parent, params, root) {
+function createPlayResolver(params) {
   return global.app.get('model__play').createPlay(params);
 }
 module.exports.createPlayResolver = createPlayResolver;

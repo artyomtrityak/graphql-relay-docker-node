@@ -15,5 +15,7 @@ module.exports = (refs) => ({
       type: graphql.GraphQLString
     }
   },
-  resolve: resolvers.createUserResolver
+  resolve: (parent, params, root) => {
+    return resolvers.createUserResolver(params);
+  }
 });

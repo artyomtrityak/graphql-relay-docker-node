@@ -19,8 +19,8 @@ module.exports = (refs) => {
 
       author: {
         type: refs.userType,
-        resolve: () => {
-          return {id: 1111, name: 'user name'};
+        resolve: (user) => {
+          return resolvers.getUserResolver({id: user.id});
         }
       }
     })

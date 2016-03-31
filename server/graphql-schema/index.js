@@ -13,9 +13,9 @@ const nodeDefs = relay.nodeDefinitions(
     const obj = relay.fromGlobalId(globalId);
     switch (obj.__type) {
       case 'User':
-        return resolvers.getUserResolver({}, {id: obj.id}, {});
+        return resolvers.getUserResolver({id: obj.id});
       case 'Play':
-        return resolvers.getPlayResolver({}, {id: obj.id}, {});
+        return resolvers.getPlayResolver({id: obj.id});
     }
     return null;
   },

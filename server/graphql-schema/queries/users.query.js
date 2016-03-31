@@ -10,5 +10,7 @@ module.exports = (refs) => ({
   args: {
     page: { type: graphql.GraphQLInt }
   },
-  resolve: resolvers.getUsersResolver
+  resolve: (parent, params, root) => {
+    return resolvers.getUsersResolver(params);
+  }
 });
