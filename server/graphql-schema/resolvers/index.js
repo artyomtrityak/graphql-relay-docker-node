@@ -60,3 +60,15 @@ function createUserResolver(parent, params, root) {
   return global.app.get('model__user').createUser(params);
 }
 module.exports.createUserResolver = createUserResolver;
+
+
+/**
+ * GraphQL Mutation create play
+ * @param  {Object} root
+ * @param  {Object} params
+ * @return {Promise}
+ */
+function createPlayResolver(parent, params, root) {
+  return global.app.get('model__play').createPlay(params);
+}
+module.exports.createPlayResolver = createPlayResolver;

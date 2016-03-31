@@ -34,13 +34,15 @@ Address depends
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { user(id: 1){ id,email } } }' http://192.168.99.100:5000/graphql`
 
 
-`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { node (id: 1){ id } }' http://192.168.99.100:5000/graphql`
+`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { node (id: 5){ id } }' http://192.168.99.100:5000/graphql`
 
 
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { users(page: 1){ id,email } } }' http://192.168.99.100:5000/graphql`
 
 
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'mutation M { createUser(email: "art.art@com", password: "test") { id,email } }' http://192.168.99.100:5000/graphql`
+
+`curl -XPOST -H 'Content-Type:application/graphql' -d 'mutation M { createPlay(name: "test play1", author: 1) { id,name } }' http://192.168.99.100:5000/graphql`
 
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { user(id: 1){ id,email,plays{id, name} } } }' http://192.168.99.100:5000/graphql`
 

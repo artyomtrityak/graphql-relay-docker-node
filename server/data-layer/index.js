@@ -1,7 +1,8 @@
 'use strict';
 
 const knexFactory = require('knex'),
-  UserModel = require('./user.model');
+  UserModel = require('./user.model'),
+  PlayModel = require('./play.model');
 
 
 /**
@@ -21,4 +22,5 @@ module.exports.connect = function connect() {
   });
 
   UserModel(db);
+  PlayModel(db);
 };
