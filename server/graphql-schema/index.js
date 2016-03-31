@@ -5,21 +5,26 @@ let graphql = require('graphql'),
   types = require('./types'),
   queries = require('./queries'),
   mutations = require('./mutations'),
-  getUserResolver = require('./resolvers').getUserResolver;
+  resolvers = require('./resolvers');
 
 
 const nodeDefs = relay.nodeDefinitions(
   (globalId) => {
     const obj = relay.fromGlobalId(globalId);
-    if (obj.type === 'User') {
-      return getUserResolver({}, {id: obj.id}, {});
-    } else {
-      return null;
+    switch (obj.__type) {
+      case 'User':
+        return resolvers.getUserResolver({}, {id: obj.id}, {});
+      case 'Play':
+        return resolvers.getPlayResolver({}, {id: obj.id}, {});
     }
+    return null;
   },
   (obj) => {
-    if (obj.__type === 'User') {
-      return refs.userType;
+    switch (obj.__type) {
+      case 'User':
+        return refs.userType;
+      case 'Play':
+        return refs.playType;
     }
     return null;
   }
