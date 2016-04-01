@@ -2,8 +2,32 @@ interface Node {
   id: ID!
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Play implements Node {
+  id: ID!
+  name: String
+  author: User
+}
+
+type PlayConnection {
+  pageInfo: PageInfo!
+  edges: [PlayEdge]
+}
+
+type PlayEdge {
+  node: Play
+  cursor: String!
+}
+
 type RootMutation {
   createUser(email: String, password: String): User
+  createPlay(author: Int, name: String): Play
 }
 
 type RootQuery {
@@ -13,7 +37,8 @@ type RootQuery {
 
 type RootViewerType {
   user(id: Int): User
-  users(page: Int): [User]
+  users(after: String, first: Int, before: String, last: Int): UserConnection
+  play(id: Int): Play
 }
 
 type User implements Node {
@@ -21,4 +46,15 @@ type User implements Node {
   email: String
   verified: Boolean
   details: String
+  plays: PlayConnection
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]
+}
+
+type UserEdge {
+  node: User
+  cursor: String!
 }

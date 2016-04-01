@@ -11,6 +11,7 @@ let graphql = require('graphql'),
 const nodeDefs = relay.nodeDefinitions(
   (globalId) => {
     const obj = relay.fromGlobalId(globalId);
+    console.log('get1:', obj);
     switch (obj.__type) {
       case 'User':
         return resolvers.getUserResolver({id: obj.id});
@@ -20,6 +21,8 @@ const nodeDefs = relay.nodeDefinitions(
     return null;
   },
   (obj) => {
+    console.log('getT:', obj);
+
     switch (obj.__type) {
       case 'User':
         return refs.userType;
@@ -36,6 +39,15 @@ let refs = {nodeInterface: nodeDefs.nodeInterface, nodeField: nodeDefs.nodeField
 [types, queries, mutations].forEach((schema) => {
   Object.keys(schema).forEach((key) => {
     refs[key] = schema[key](refs);
+    const refConnection = relay.connectionDefinitions({
+      name: refs[key].name,
+      nodeType: refs[key]
+    });
+
+    console.log(refs[key].name + 'Connection');
+
+    refs[refs[key].name + 'Connection'] = refConnection.connectionType;
+    refs[refs[key].name + 'Edge'] = refConnection.edgeType;
   });
 });
 

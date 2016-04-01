@@ -26,7 +26,7 @@ module.exports = (refs) => {
       },
 
       plays: {
-        type: new graphql.GraphQLList(refs.playType),
+        type: refs.PlayConnection,
         resolve: () => {
           return [{id: 1, name: 'play 1'}, {id: 2, name: 'play 2'}];
         }

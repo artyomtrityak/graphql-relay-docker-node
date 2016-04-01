@@ -6,11 +6,15 @@ const graphql = require('graphql'),
 
 
 module.exports = (refs) => ({
-  type: new graphql.GraphQLList(refs.userType),
-  args: {
-    page: { type: graphql.GraphQLInt }
-  },
-  resolve: (parent, params, root) => {
-    return resolvers.getUsersResolver(params);
+  type: refs.UserConnection,
+  args: relay.connectionArgs,
+  /*{
+    //page: { type: graphql.GraphQLInt }
+  },*/
+  resolve: (parent, args, root) => {
+    return relay.connectionFromPromisedArray(
+      resolvers.getUsersResolver(args),
+      args
+    );
   }
 });

@@ -37,7 +37,7 @@ Address depends
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { node (id: 5){ id } }' http://192.168.99.100:5000/graphql`
 
 
-`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { users(page: 1){ id,email } } }' http://192.168.99.100:5000/graphql`
+`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { users(first: 5){ edges {cursor, node { id, email } } } } }' http://192.168.99.100:5000/graphql`
 
 
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'mutation M { createUser(email: "art.art@com", password: "test") { id,email } }' http://192.168.99.100:5000/graphql`

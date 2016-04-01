@@ -19,7 +19,8 @@ module.exports.getUserResolver = getUserResolver;
  * @return {Promise}
  */
 function getUsersResolver(params) {
-  return global.app.get('model__user').getUsers({page: params.page});
+  console.log(params);
+  return global.app.get('model__user').getUsers({limit: params.first});
 }
 module.exports.getUsersResolver = getUsersResolver;
 
