@@ -5,7 +5,8 @@ const graphql = require('graphql'),
 
   userQuery = require('./user.query'),
   usersQuery = require('./users.query'),
-  playQuery = require('./play.query');
+  playQuery = require('./play.query'),
+  playsQuery = require('./plays.query');
 
 
 module.exports.rootQuery = (refs) => {
@@ -15,7 +16,8 @@ module.exports.rootQuery = (refs) => {
     fields: () => ({
       user: userQuery(refs),
       users: usersQuery(refs),
-      play: playQuery(refs)
+      play: playQuery(refs),
+      plays: playsQuery(refs)
     })
   });
 

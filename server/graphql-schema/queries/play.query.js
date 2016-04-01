@@ -2,7 +2,7 @@
 
 const graphql = require('graphql'),
   relay = require('graphql-relay'),
-  resolvers = require('../resolvers');
+  resolvers = require('../resolvers').play;
 
 
 module.exports = (refs) => ({

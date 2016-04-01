@@ -14,9 +14,9 @@ const nodeDefs = relay.nodeDefinitions(
     console.log('get1:', obj);
     switch (obj.__type) {
       case 'User':
-        return resolvers.getUserResolver({id: obj.id});
+        return resolvers.user.getUserResolver({id: obj.id});
       case 'Play':
-        return resolvers.getPlayResolver({id: obj.id});
+        return resolvers.play.getPlayResolver({id: obj.id});
     }
     return null;
   },
@@ -43,8 +43,6 @@ let refs = {nodeInterface: nodeDefs.nodeInterface, nodeField: nodeDefs.nodeField
       name: refs[key].name,
       nodeType: refs[key]
     });
-
-    console.log(refs[key].name + 'Connection');
 
     refs[refs[key].name + 'Connection'] = refConnection.connectionType;
     refs[refs[key].name + 'Edge'] = refConnection.edgeType;

@@ -2,15 +2,15 @@
 
 const graphql = require('graphql'),
   relay = require('graphql-relay'),
-  resolvers = require('../resolvers').user;
+  resolvers = require('../resolvers').play;
 
 
 module.exports = (refs) => ({
-  type: refs.UserConnection,
+  type: refs.PlayConnection,
   args: relay.connectionArgs,
   resolve: (parent, args, root) => {
     return relay.connectionFromPromisedArray(
-      resolvers.getUsersResolver(args),
+      resolvers.getPlaysResolver(args),
       args
     );
   }
