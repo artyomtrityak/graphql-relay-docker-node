@@ -11,7 +11,6 @@ let graphql = require('graphql'),
 const nodeDefs = relay.nodeDefinitions(
   (globalId) => {
     const obj = relay.fromGlobalId(globalId);
-    console.log('get1:', obj);
     switch (obj.__type) {
       case 'User':
         return resolvers.user.getUserResolver({id: obj.id});
@@ -21,8 +20,6 @@ const nodeDefs = relay.nodeDefinitions(
     return null;
   },
   (obj) => {
-    console.log('getT:', obj);
-
     switch (obj.__type) {
       case 'User':
         return refs.userType;
