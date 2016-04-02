@@ -38,12 +38,16 @@ module.exports = function initialize(_db) {
  * @return {Promise} Select query promise
  */
 PublicAPI.getUsers = (options) => {
-  options = Object.assign({}, options, {page: 1, pageSize: 50});
+  console.log(options);
+
+  options = Object.assign({}, {first: 1, after: 0, pageSize: 50}, options);
+
+  //TODO: check how relay sends after
 
   return db.select('id', 'email', 'verified', 'details', '__type')
     .table('users')
-    .offset((options.page - 1) * options.pageSize)
-    .limit(options.pageSize);
+    .offset(0)
+    .limit(options.first);
 };
 
 
