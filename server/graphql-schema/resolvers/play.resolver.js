@@ -7,8 +7,7 @@
  * @return {Promise}
  */
 function getPlayResolver(params) {
-  return {id: 2, name: 'play 2'};
-  //return global.app.get('model__user').getUser({id: params.id});
+  return global.app.get('model__play').getUser(params);
 }
 module.exports.getPlayResolver = getPlayResolver;
 
@@ -20,8 +19,7 @@ module.exports.getPlayResolver = getPlayResolver;
  * @return {Promise}
  */
 function getPlaysResolver(params) {
-  return [{id: 1, name: 'play 1'}, {id: 2, name: 'play 2'}];
-  //return global.app.get('model__user').getUsers({page: params.page});
+  return global.app.get('model__play').getPlays(params);
 }
 module.exports.getPlaysResolver = getPlaysResolver;
 

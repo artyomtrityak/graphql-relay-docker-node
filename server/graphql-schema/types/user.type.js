@@ -1,8 +1,7 @@
 'use strict';
 
 const graphql = require('graphql'),
-  relay = require('graphql-relay'),
-  resolvers = require('../resolvers').play;
+  relay = require('graphql-relay');
 
 
 module.exports = (refs) => {
@@ -27,8 +26,13 @@ module.exports = (refs) => {
 
       plays: {
         type: refs.PlayConnection,
-        resolve: () => {
-          return [{id: 1, name: 'play 1'}, {id: 2, name: 'play 2'}];
+        args: relay.connectionArgs,
+        resolve: (user, args, root) => {
+          const resultArgs = Object.assign({}, args, {authorId: user.id});
+          return relay.connectionFromPromisedArray(
+            global.app.get('model__play').getPlays(resultArgs),
+            args
+          );
         }
       }
     })

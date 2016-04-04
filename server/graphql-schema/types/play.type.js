@@ -1,8 +1,7 @@
 'use strict';
 
 const graphql = require('graphql'),
-  relay = require('graphql-relay'),
-  resolvers = require('../resolvers').user;
+  relay = require('graphql-relay');
 
 
 module.exports = (refs) => {
@@ -20,7 +19,7 @@ module.exports = (refs) => {
       author: {
         type: refs.userType,
         resolve: (user) => {
-          return resolvers.getUserResolver({id: user.id});
+          return global.app.get('model__user').getUser({id: user.id});
         }
       }
     })

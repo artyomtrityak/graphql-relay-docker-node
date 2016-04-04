@@ -1,8 +1,7 @@
 'use strict';
 
 const graphql = require('graphql'),
-  relay = require('graphql-relay'),
-  resolvers = require('../resolvers').user;
+  relay = require('graphql-relay');
 
 
 module.exports = (refs) => ({
@@ -10,7 +9,7 @@ module.exports = (refs) => ({
   args: relay.connectionArgs,
   resolve: (parent, args, root) => {
     return relay.connectionFromPromisedArray(
-      resolvers.getUsersResolver(args),
+      global.app.get('model__user').getUsers(args),
       args
     );
   }

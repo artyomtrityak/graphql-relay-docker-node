@@ -4,18 +4,17 @@ let graphql = require('graphql'),
   relay = require('graphql-relay'),
   types = require('./types'),
   queries = require('./queries'),
-  mutations = require('./mutations'),
-  resolvers = require('./resolvers');
+  mutations = require('./mutations');
 
 
 const nodeDefs = relay.nodeDefinitions(
   (globalId) => {
     const obj = relay.fromGlobalId(globalId);
-    switch (obj.__type) {
+    switch (obj.type) {
       case 'User':
-        return resolvers.user.getUserResolver({id: obj.id});
+        return global.app.get('model__user').getUser({id: obj.id});
       case 'Play':
-        return resolvers.play.getPlayResolver({id: obj.id});
+        return global.app.get('model__play').getPlay({id: obj.id});
     }
     return null;
   },

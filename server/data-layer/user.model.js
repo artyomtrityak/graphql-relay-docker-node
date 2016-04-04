@@ -40,9 +40,9 @@ module.exports = function initialize(_db) {
 PublicAPI.getUsers = (options) => {
   console.log(options);
 
-  options = Object.assign({}, {first: 1, after: 0, pageSize: 50}, options);
-
-  //TODO: check how relay sends after
+  //TODO: Work with first/after and last/before arguments
+  //TODO: check how relay sends after/before and transform to SQL
+  options = Object.assign({}, options);
 
   return db.select('id', 'email', 'verified', 'details', '__type')
     .table('users')

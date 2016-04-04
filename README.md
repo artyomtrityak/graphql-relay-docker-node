@@ -46,7 +46,11 @@ Address depends
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'mutation M { createPlay(name: "test play1", author: 1) { id,name } }' http://192.168.99.100:5000/graphql`
 
 
-`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { user(id: 1){ id,email,plays{id, name} } } }' http://192.168.99.100:5000/graphql`
+`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { user(id: 1){ id,email,plays(first: 3) {edges {cursor, node { id, name } }} } } }' http://192.168.99.100:5000/graphql`
 
 
 `curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { user(id: 1){ id,email,plays{id, name, author{email, id}   } } } }' http://192.168.99.100:5000/graphql`
+
+`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { plays(first: 5){ edges {cursor, node { id, name } } , pageInfo { hasNextPage }} } }' http://192.168.99.100:5000/graphql`
+
+`curl -XPOST -H 'Content-Type:application/graphql' -d 'query RootQueryType { viewer { plays(first: 5){ edges {cursor, node { id, name, author {id, email} } } , pageInfo { hasNextPage }} } }' http://192.168.99.100:5000/graphql`

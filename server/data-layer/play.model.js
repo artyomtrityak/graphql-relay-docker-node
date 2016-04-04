@@ -41,14 +41,21 @@ module.exports = function initialize(_db) {
  * @return {Promise} Select query promise
  */
 PublicAPI.getPlays = (options) => {
-  options = Object.assign({}, options, {page: 1, pageSize: 50});
+  options = Object.assign({}, options);
+
+  console.log(options);
 
   return db.select(
     'id', 'name', 'description', 'author', 'bgg_game_id', 'players_limit', 'starts_at', 'address', 'details', '__type'
   )
-    .table('plays')
-    .offset((options.page - 1) * options.pageSize)
-    .limit(options.pageSize);
+  .table('plays')
+  .where(function() {
+    if (options.authorId) {
+      this.where('author', options.authorId);
+    }
+  })
+  .offset(0)
+  .limit(options.first);
 };
 
 
