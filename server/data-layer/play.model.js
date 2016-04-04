@@ -16,7 +16,6 @@ module.exports = function initialize(_db) {
   //db.schema.dropTableIfExists('plays')
   //.then(function() {
   db.schema.createTableIfNotExists('plays', function(t) {
-    //TODO: use uuid
     t.increments('id').primary();
     t.string('__type', 16).defaultTo('Play');
     t.string('name', 127);

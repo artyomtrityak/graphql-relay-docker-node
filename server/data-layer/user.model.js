@@ -16,7 +16,6 @@ module.exports = function initialize(_db) {
   //db.schema.dropTableIfExists('users')
   //.then(function() {
   db.schema.createTableIfNotExists('users', function(t) {
-    //TODO: use uuid
     t.increments('id').primary();
     t.string('__type', 16).defaultTo('User');
     t.string('email', 100);
