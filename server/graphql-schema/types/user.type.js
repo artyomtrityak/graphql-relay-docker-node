@@ -34,6 +34,18 @@ module.exports = (refs) => {
             args
           );
         }
+      },
+      friends: {
+        type: refs.UserConnection,
+        args: relay.connectionArgs,
+        resolve: (user, args, root) => {
+          //TODO: get users from friends table
+          const resultArgs = Object.assign({}, args, {ownerUserId: user.id});
+          return relay.connectionFromPromisedArray(
+            global.app.get('model__user').getUsers(resultArgs),
+            args
+          );
+        }
       }
     })
   });
